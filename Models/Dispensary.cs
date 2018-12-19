@@ -140,37 +140,29 @@ namespace Weed.Models
             return newDispensary;
         }
         
-        public static Dispensary FindByName(string name)
+        public static List<Dispensary> FindByName(string storeName)
          {
+            List<Dispensary> allDispensaries = new List<Dispensary>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM dispensaries WHERE Organization = (@searchName);";
-            MySqlParameter searchName = new MySqlParameter();
-            searchName.ParameterName = "@searchName";
-            searchName.Value = name;
-            cmd.Parameters.Add(searchName);
+            cmd.CommandText = @"SELECT * FROM dispensaries WHERE Organization LIKE '%" + storeName + "%';";
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
-
-            int DispensaryLicense = 0;
-            string DispensaryName = "No Matches Found!";
-            string DispensaryAddress = "";
-            
-
             while(rdr.Read())
             {
-                DispensaryLicense = rdr.GetInt32(2);
-                DispensaryName = rdr.GetString(0);
-                DispensaryAddress = rdr.GetString(5) + " " + rdr.GetString(6) + ", " + rdr.GetString(7) + ", " + rdr.GetString(8) + ", " + rdr.GetString(9);
+                int DispensaryLicense = rdr.GetInt32(2);
+                string DispensaryName = rdr.GetString(0);
+                string DispensaryAddress = rdr.GetString(5);
+                Dispensary newDispensary = new Dispensary(DispensaryName, DispensaryAddress, DispensaryLicense);
+                allDispensaries.Add(newDispensary);
             }
 
-            Dispensary newDispensary = new Dispensary(DispensaryName, DispensaryAddress, DispensaryLicense);
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return newDispensary;
+            return allDispensaries;
         }
 
         public static List<Dispensary> FindByCity(string city)

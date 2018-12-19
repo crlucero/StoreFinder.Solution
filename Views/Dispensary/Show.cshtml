@@ -1,9 +1,7 @@
 @{
   Layout = "_Layout";
 }
-@{
-  Layout = "_Layout";
-}
+
 
 <br>
 <h1>Dispensary Details:</h1>
@@ -56,7 +54,7 @@
   <script>  
     var icon = new H.map.Icon('/img/pin1.png');
           var geocodingParams = {
-          searchText: '@(Model.GetAddress()), @(Model.GetCity()), WA'
+          searchText: '@(Model["dispensary"].GetAddress()), @(Model["dispensary"].GetCity()), WA'
         };
         addressFinder(geocodingParams);
 

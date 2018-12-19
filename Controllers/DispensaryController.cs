@@ -31,9 +31,11 @@ namespace Weed.Controllers
         }
 
         [HttpPost("/dispensaries/searchbyname")]
-        public ActionResult SearchName(string DispensaryName)
-        {  Dispensary foundDispensary = Dispensary.FindByName(DispensaryName);
-           return View("Show", foundDispensary);     
+        public ActionResult SearchName(string storeName)
+        {  
+            List<Dispensary> allDispensaries = Dispensary.FindByName(storeName);
+            
+            return View(allDispensaries); 
         }
 
         [HttpPost("/dispensaries/searchbycity")]
