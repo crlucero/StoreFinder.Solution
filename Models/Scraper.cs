@@ -94,6 +94,7 @@ namespace Weed.Models
             string name = "blah";
             string description = "description";
             string schedule = "no schedule";
+            int a = 5;
 
             List<string> daysOfWeek = new List<string>{monday, tuesday, wednesday, thursday, friday, saturday, sunday};
 
@@ -124,35 +125,45 @@ namespace Weed.Models
                 string tempSchedule = "";
                 schedule = "";
                 foreach(string day in daysOfWeek)
+                try
                 {
-
-                    IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
-                    IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
-                    tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
-                    schedule = string.Concat(schedule, tempSchedule);
-
+                        IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
+                        IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
+                        tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
+                        schedule = string.Concat(schedule, tempSchedule);
                 }
+                catch
+                {
+                    schedule = "closed";
+                }
+
                 newScraper.SetSchedule(schedule);
                 allScrapers.Add(newScraper);
                 newScraper.Save();
                 driver.Navigate().Back();
                 
+
                 if(x%10==0)
                 {   
                     try
                     {
-                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div[2]/div/div[10]/a/div/span"));
+                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div[2]/div/div["+(a+1)+"]/a/div/span"));
+                        x=1;
                         nextButton.Click();
+                        Thread.Sleep(5000);
+
                     }
                     catch
                     {
-                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div[2]/div/div[11]/a/div/span"));
+                        
+                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div[2]/div/div["+(a+2)+"]/a/div/span"));
+                        x=1;
                         nextButton.Click();
+                        Thread.Sleep(5000);
                     }
-
-                    Thread.Sleep(5000);
-                    x=0;
+                    
                 }
+
 
                 x=x+1;
                 z=z+1;

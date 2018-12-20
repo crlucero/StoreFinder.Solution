@@ -2,8 +2,25 @@
   Layout = "_Layout";
 }
 
-<h1>All the dispensaries:</h1>
+<h1>Search for Dispensaries:</h1>
 <br>
+ <div class="col-md-5">
+    <form action='/dispensaries/searchbyname' method='post'>
+      <label for='storeName'>Search by Dispensary name: </label>
+      <input id='storeName' name='storeName' type='text'>
+      <br>
+      <button type='submit'>Search</button>
+    </form>
+    <br>
+     <form action='/dispensaries/searchbycity' method='post'>
+      <label for='city'>Search by your city: </label>
+      <input id='city' name='city' type='text'>
+      <br>
+      <button type='submit'>Search</button>
+    </form>
+</div>
+    
+  
 
 <div class="row">
   <div class="col-md-5">
@@ -49,21 +66,3 @@
           };
         </script>
   </div>
-
-
-
- <div class="col-md-5">
-    <form action='/dispensaries/searchbyname' method='post'>
-      <label for='storeName'>Search by Dispensary name: </label>
-      <input id='storeName' name='storeName' type='text'>
-      <button type='submit'>Search</button>
-    </form>
-    <br>
-     <form action='/dispensaries/searchbycity' method='post'>
-      <label for='city'>Search by your city: </label>
-      <input id='city' name='city' type='text'>
-      <button type='submit'>Search</button>
-    </form>
-</div>
-    
-  
