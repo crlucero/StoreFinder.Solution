@@ -59,8 +59,11 @@ namespace Weed.Controllers
             List<Comment> foundComments = Comment.GetCommentsByLicense(license);
             Dispensary foundDispensary = Dispensary.FindByLicense(license);
             Dictionary<string, object> model = new Dictionary<string, object> {};
+            string name = foundDispensary.GetName();
+            Scraper foundScraper = Scraper.FindByName(name);
             model.Add("dispensary", foundDispensary);
             model.Add("comments", foundComments);
+            model.Add("scraper", foundScraper);
             return View("Show", model); 
         }
     }

@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-
+using System.Threading;
 
 namespace Weed.Models
 {
@@ -70,6 +70,8 @@ namespace Weed.Models
             }
         }
 
+
+
         public static List<Scraper> searchStores(string locationName, int number)
         {   
             List<Scraper> allScrapers = new List<Scraper> {};
@@ -95,14 +97,17 @@ namespace Weed.Models
 
             List<string> daysOfWeek = new List<string>{monday, tuesday, wednesday, thursday, friday, saturday, sunday};
 
+            int x = 1;
+            int z=1;
 
-            for(int x = 1; x <= number ; x++)
+            while(z <= number)
             {   
 
-                IWebElement foundStores = driver.FindElement(By.CssSelector("#wrap > div:nth-child(4) > div.lemon--div__373c0__6Tkil.spinner-container__373c0__N6Hff.border-color--default__373c0__2oFDT > div.lemon--div__373c0__6Tkil.container__373c0__13FCe.space3__373c0__DeVwY > div > div.lemon--div__373c0__6Tkil.mainContentContainer__373c0__32Mqa.arrange__373c0__UHqhV.gutter-30__373c0__2PiuS.border-color--default__373c0__2oFDT > div.lemon--div__373c0__6Tkil.mapColumnTransition__373c0__10KHB.arrange-unit__373c0__1piwO.arrange-unit-fill__373c0__17z0h.border-color--default__373c0__2oFDT > div > ul > li:nth-child(" + x + ") > div > div > div > div.lemon--div__373c0__6Tkil.arrange__373c0__UHqhV.border-color--default__373c0__2oFDT > div.lemon--div__373c0__6Tkil.arrange-unit__373c0__1piwO.arrange-unit-fill__373c0__17z0h.border-color--default__373c0__2oFDT > div > div.lemon--div__373c0__6Tkil.mainAttributes__373c0__1r0QA.arrange-unit__373c0__1piwO.arrange-unit-fill__373c0__17z0h.border-color--default__373c0__2oFDT > div:nth-child(1) > div.lemon--div__373c0__6Tkil.businessName__373c0__1fTgn.border-color--default__373c0__2oFDT > h3 > a"));
+                IWebElement foundStores = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/ul/li[" + x + "]/div/div/div/div[1]/div[2]/div/div[1]/div[1]/div[1]/h3/a"));
+
                 name = foundStores.Text;
                 foundStores.Click();
-                
+
                 try
                 {
                     IWebElement foundDescription = driver.FindElement(By.CssSelector("#super-container > div > div > div.column.column-beta.sidebar > div.bordered-rail > div.ywidget.js-from-biz-owner > p"));
@@ -113,7 +118,6 @@ namespace Weed.Models
                 {
                     description = "none";
                 }
-            
 
                 Scraper newScraper = new Scraper(name, description, schedule);
                 int y = 1;
@@ -121,32 +125,38 @@ namespace Weed.Models
                 schedule = "";
                 foreach(string day in daysOfWeek)
                 {
-                if (y%10 != 0)
-                    {
-                        IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
 
-                        IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
-                        y = y+1;
-                        tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
-                        schedule = string.Concat(schedule, tempSchedule);
+                    IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
+                    IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
+                    tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
+                    schedule = string.Concat(schedule, tempSchedule);
 
-                    }
-                else
-                    {
-                        IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
-                        IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
-                        tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
-                        schedule = string.Concat(schedule, tempSchedule);
-
-                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div[2]/div/div[11]/a/div/span"));
-                        y = y++;
-                        nextButton.Click();
-                    }
                 }
                 newScraper.SetSchedule(schedule);
                 allScrapers.Add(newScraper);
                 newScraper.Save();
                 driver.Navigate().Back();
+                
+                if(x%10==0)
+                {   
+                    try
+                    {
+                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div[2]/div/div[10]/a/div/span"));
+                        nextButton.Click();
+                    }
+                    catch
+                    {
+                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div[2]/div/div[11]/a/div/span"));
+                        nextButton.Click();
+                    }
+
+                    Thread.Sleep(5000);
+                    x=0;
+                }
+
+                x=x+1;
+                z=z+1;
+
             } 
             return allScrapers;
 
