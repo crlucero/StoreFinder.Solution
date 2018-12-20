@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+
+<br>
+<img src="~/img/weed.png" class="landing"/>
+<h1>How does my store rate?</h1>
+
+
+  <form action='/scraper/results' method='post'>
+      <label for='locationName'>Search by Name: </label>
+      <input id='locationName' name='locationName' type='text'><br>
+      <label for='number'># of stores to scrape: </label>
+      <input id='number' name='number' type='number'>
+      <button type='submit'>Search</button>
+    </form>
+

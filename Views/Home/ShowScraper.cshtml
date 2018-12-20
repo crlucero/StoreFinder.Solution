@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+<br>
+<img src="~/img/weed.png" class="landing"/>
+<h1>Scraper results</h1>
+
+<h2>Schedule</h2>
+<ul>
+@foreach(var store in Model)
+{
+  <li>Name: @store.GetName()</li>
+  <li>Description: @store.GetDescription()</li>
+  <li> Schedule: @store.GetSchedule()</li>
+}
+</ul>
+
+  <form action='/scraper/results' method='post'>
+      <label for='storeName'>Search by Name: </label>
+      <input id='storeName' name='storeName' type='text'>
+      <button type='submit'>Search</button>
+    </form>
