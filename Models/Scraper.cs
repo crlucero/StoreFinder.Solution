@@ -102,9 +102,18 @@ namespace Weed.Models
                 IWebElement foundStores = driver.FindElement(By.CssSelector("#wrap > div:nth-child(4) > div.lemon--div__373c0__6Tkil.spinner-container__373c0__N6Hff.border-color--default__373c0__2oFDT > div.lemon--div__373c0__6Tkil.container__373c0__13FCe.space3__373c0__DeVwY > div > div.lemon--div__373c0__6Tkil.mainContentContainer__373c0__32Mqa.arrange__373c0__UHqhV.gutter-30__373c0__2PiuS.border-color--default__373c0__2oFDT > div.lemon--div__373c0__6Tkil.mapColumnTransition__373c0__10KHB.arrange-unit__373c0__1piwO.arrange-unit-fill__373c0__17z0h.border-color--default__373c0__2oFDT > div > ul > li:nth-child(" + x + ") > div > div > div > div.lemon--div__373c0__6Tkil.arrange__373c0__UHqhV.border-color--default__373c0__2oFDT > div.lemon--div__373c0__6Tkil.arrange-unit__373c0__1piwO.arrange-unit-fill__373c0__17z0h.border-color--default__373c0__2oFDT > div > div.lemon--div__373c0__6Tkil.mainAttributes__373c0__1r0QA.arrange-unit__373c0__1piwO.arrange-unit-fill__373c0__17z0h.border-color--default__373c0__2oFDT > div:nth-child(1) > div.lemon--div__373c0__6Tkil.businessName__373c0__1fTgn.border-color--default__373c0__2oFDT > h3 > a"));
                 name = foundStores.Text;
                 foundStores.Click();
+                
+                try
+                {
+                    IWebElement foundDescription = driver.FindElement(By.CssSelector("#super-container > div > div > div.column.column-beta.sidebar > div.bordered-rail > div.ywidget.js-from-biz-owner > p"));
+                    description = foundDescription.Text;
+                }
 
-                IWebElement foundDescription = driver.FindElement(By.CssSelector("#super-container > div > div > div.column.column-beta.sidebar > div.bordered-rail > div.ywidget.js-from-biz-owner > p"));
-                description = foundDescription.Text;
+                catch
+                {
+                    description = "none";
+                }
+            
 
                 Scraper newScraper = new Scraper(name, description, schedule);
                 int y = 1;
@@ -112,20 +121,33 @@ namespace Weed.Models
                 schedule = "";
                 foreach(string day in daysOfWeek)
                 {
-                    IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
+                if (y%10 != 0)
+                    {
+                        IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
 
-                    IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
-                    y = y+1;
-                    tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
-                    schedule = string.Concat(schedule, tempSchedule);
+                        IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
+                        y = y+1;
+                        tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
+                        schedule = string.Concat(schedule, tempSchedule);
 
+                    }
+                else
+                    {
+                        IWebElement openTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[1]"));
+                        IWebElement closeTime = driver.FindElement(By.XPath("//*[@id='super-container']/div/div/div[2]/div[2]/div[1]/table/tbody/tr[" + y + "]/td[1]/span[2]"));
+                        tempSchedule = string.Concat(day," ", openTime.Text," - ", closeTime.Text +" -- ");
+                        schedule = string.Concat(schedule, tempSchedule);
+
+                        IWebElement nextButton = driver.FindElement(By.XPath("//*[@id='wrap']/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div[2]/div/div[11]/a/div/span"));
+                        y = y++;
+                        nextButton.Click();
+                    }
                 }
                 newScraper.SetSchedule(schedule);
                 allScrapers.Add(newScraper);
                 newScraper.Save();
                 driver.Navigate().Back();
             } 
-            driver.Quit();
             return allScrapers;
 
         } 
