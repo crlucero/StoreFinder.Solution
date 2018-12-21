@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 18, 2018 at 06:13 PM
+-- Generation Time: Dec 20, 2018 at 01:46 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -19,8 +19,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `Weed`
 --
-CREATE DATABASE IF NOT EXISTS `Weed` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `Weed`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `stars` int(11) NOT NULL,
+  `dispensaryLicense` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `description`, `stars`, `dispensaryLicense`) VALUES
+(15, 'Hello', 5, 416694),
+(16, 'Hello', 5, 416694),
+(17, 'Good SHit', 4, 416694),
+(18, 'Good SHit', 4, 416694),
+(19, 'this place blows', 5, 412672),
+(20, 'Good bud', 4, 413586);
 
 -- --------------------------------------------------------
 
@@ -2007,11 +2030,24 @@ INSERT INTO `dispensaries` (`Organization`, `Active`, `License`, `UBI`, `Type`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `scraper`
+--
+
+CREATE TABLE `scraper` (
+  `id` int(11) NOT NULL,
+  `storeName` varchar(255) NOT NULL,
+  `schedule` varchar(255) NOT NULL,
+  `description` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `violations`
 --
 
 CREATE TABLE `violations` (
-  `License Number` int(6) DEFAULT NULL,
+  `license` int(6) DEFAULT NULL,
   `Visit Date` varchar(22) DEFAULT NULL,
   `Penalty Type` varchar(15) DEFAULT NULL,
   `Case #` varchar(8) DEFAULT NULL,
@@ -2025,7 +2061,7 @@ CREATE TABLE `violations` (
 -- Dumping data for table `violations`
 --
 
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (412199, '10/28/2016 12:00:00 AM', 'Written Warning', '7N6302A', '314.55.020', '(MJ) Operating plan: Violations of a board-approved operating plan.', 'UNINCORPORATED AREAS', 'SPOKANE'),
 (416619, '01/25/2017 12:00:00 AM', 'Written Warning', '7I7025B', '314.55.017', '(MJ) Unauthorized sale to a retail licensee. (producer)', 'UNINCORPORATED AREAS', 'ISLAND'),
 (421490, '01/11/2017 12:00:00 AM', 'Written Warning', '1C7011A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems.', 'UNINCORPORATED AREAS', 'THURSTON'),
@@ -2300,7 +2336,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (414958, '02/14/2017 12:00:00 AM', 'Written Warning', '4H7045A', '314.55.092', '(MJ) Failure to submit monthly tax reports and/or payments.', 'ELLENSBURG', 'KITTITAS'),
 (416315, '01/06/2015 12:00:00 AM', 'Written Warning', '7G5006A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'SEATTLE', 'KING'),
 (414761, '01/19/2016 12:00:00 AM', 'Written Warning', '1L6019B', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems.', 'VANCOUVER', 'CLARK');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (416539, '12/17/2014 12:00:00 AM', 'Written Warning', '7N4351A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems.', 'UNINCORP. AREAS', 'STEVENS'),
 (416548, '12/11/2014 12:00:00 AM', 'Written Warning', '7O4345A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems.', 'UNINCORP. AREAS', 'BENTON'),
 (416502, '01/31/2017 12:00:00 AM', 'Written Warning', '7D7031A', '314.55.085', '(MJ) Violation of transportation requirements.', 'LONGVIEW', 'COWLITZ'),
@@ -2584,7 +2620,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (417165, '04/04/2016 12:00:00 AM', 'Written Warning', '7J6095A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'UNINCORPORATED AREAS', 'KING'),
 (412457, '10/16/2016 12:00:00 AM', 'Written Warning', '7L6290D', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'MOXEE', 'YAKIMA'),
 (412070, '02/04/2016 12:00:00 AM', 'Written Warning', '7J6035A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability (processor or retail licensee).', 'SEATTLE', 'KING');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (412598, '07/11/2017 12:00:00 AM', 'Written Warning', '7G7192A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability (processor or retail licensee).', 'ARLINGTON', 'SNOHOMISH'),
 (412452, '02/22/2016 12:00:00 AM', 'Written Warning', '7B6053A', '314.55.083(6)', '(MJ) Failure to utilize and/or maintain traceability (processor or retail licensee).', 'UNINCORPORATED AREAS', 'MASON'),
 (412112, '07/22/2015 12:00:00 AM', 'Written Warning', '7J5203A', '314.55.083(1)', '(MJ) Licensee/employee failing to display required security badge.', 'BELLEVUE', 'KING'),
@@ -2881,7 +2917,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (412735, '03/27/2017 12:00:00 AM', 'AVN', '7D7086A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'TACOMA', 'PIERCE'),
 (412226, '09/08/2017 12:00:00 AM', 'Written Warning', '7N7251A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORPORATED AREAS', 'SPOKANE'),
 (417643, '03/22/2016 12:00:00 AM', 'AVN', '3D6082A', '69.50.357', '(MJ) Allowing a minor to frequent a restricted area.', 'OAK HARBOR', 'ISLAND');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (425273, '08/24/2017 12:00:00 AM', 'Written Warning', '4D7236A', '314.55.155(1)', '(MJ) Advertising violations: Sign exceeding 1600 square inches; within 1000 feet of prohibited areas; on or in public transit vehicles, shelters, or publicly owned or operated property.', 'WALLA WALLA (CITY)', 'WALLA WALLA'),
 (416046, '07/12/2017 12:00:00 AM', 'AVN', '7H7193A', '314.55.097', '(MJ) Failure for a producer to meet marijuana waste disposal requirements. (producer)', 'UNINCORP. AREAS', 'OKANOGAN'),
 (416911, '11/18/2015 12:00:00 AM', 'AVN', '7B5322A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability (processor or retail licensee).', 'AUBURN', 'KING'),
@@ -3187,7 +3223,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (412919, '07/26/2016 12:00:00 AM', 'AVN', '7E6208A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'VANCOUVER', 'CLARK'),
 (413414, '06/05/2017 12:00:00 AM', 'AVN', '1J7156A', '314.55.083(1)', '(MJ) Licensee/employee failing to display required security badge.', 'BINGEN', 'KLICKITAT'),
 (412923, '12/28/2016 12:00:00 AM', 'AVN', '1R6363A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems.', 'UNINCORPORATED AREAS', 'PIERCE');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (416107, '08/26/2016 12:00:00 AM', 'AVN', '7J6239A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'LAKE STEVENS', 'SNOHOMISH'),
 (414867, '10/18/2015 12:00:00 AM', 'AVN', '3M5291E', '69.50.357', '(MJ) Allowing a minor to frequent a restricted area.', 'ISSAQUAH', 'KING'),
 (412745, '05/04/2016 12:00:00 AM', 'AVN', '7N6125B', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'UNINCORPORATED AREAS', 'SPOKANE'),
@@ -3493,7 +3529,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (413198, '10/19/2017 12:00:00 AM', 'Written Warning', '7M7292A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORP. AREAS', 'GRANT'),
 (415507, '08/24/2015 12:00:00 AM', 'AVN', '3G5236A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability (processor or retail licensee).', 'UNINCORPORATED AREAS', 'SNOHOMISH'),
 (416661, '10/30/2015 12:00:00 AM', 'AVN', '7M5303B', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'SPOKANE (CITY)', 'SPOKANE');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (415652, '11/20/2015 12:00:00 AM', 'AVN', '3J5324A', '69.50.357', '(MJ) Allowing a minor to frequent a restricted area.', 'KIRKLAND', 'KING'),
 (413558, '09/07/2017 12:00:00 AM', 'Written Warning', '2J7250A', '314.55.155', '(MJ) Advertising: Violations (statements/illustrations).', 'SEATTLE', 'KING'),
 (418297, '11/02/2016 12:00:00 AM', 'AVN', '7N6307A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'UNINCORP. AREAS', 'STEVENS'),
@@ -3803,7 +3839,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (413131, '12/16/2015 12:00:00 AM', 'AVN', '7Q5350A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'SPOKANE (CITY)', 'SPOKANE'),
 (414256, '05/26/2016 12:00:00 AM', 'AVN', '3A6147A', '314.55.079', '(MJ) Sale or service to minor', 'BELLINGHAM', 'WHATCOM'),
 (413078, '11/01/2014 12:00:00 AM', 'AVN', '7G4305A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'FRIDAY HARBOR', 'SAN JUAN');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (412723, '05/10/2016 12:00:00 AM', 'AVN', '7J6131A', '314.55.085', '(MJ) Violation of transportation requirements.', 'SEATTLE', 'KING'),
 (412868, '03/03/2016 12:00:00 AM', 'AVN', '7L6063A', '314.55.099', '(MJ) Failure to maintain standardized scale requirements (producer).', 'MOXEE', 'YAKIMA'),
 (423885, '12/14/2016 12:00:00 AM', 'AVN', '4O6349B', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORPORATED AREAS', 'SPOKANE'),
@@ -4105,7 +4141,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (416495, '01/03/2018 12:00:00 AM', 'Written Warning', '7N8003A', '314.55.083(3)', '(MJ) Failure to maintain required security alarm and surveillance systems. (producer)', 'UNINCORP. AREAS', 'GRANT'),
 (424327, '01/19/2018 12:00:00 AM', 'AVN', '7G8019A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'LAKE STEVENS', 'SNOHOMISH'),
 (84154, '01/30/2018 12:00:00 AM', 'AVN', '1S8030A', '314.55.089', '(MJ) Failure to submit monthly tax reports and/or payments.', 'TACOMA', 'PIERCE');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (422570, '01/12/2018 12:00:00 AM', 'AVN', '3H8012A', '314.55.079', '(MJ) Sale or service to minor', 'EDMONDS', 'SNOHOMISH'),
 (421707, '01/10/2018 12:00:00 AM', 'Written Warning', '3B8010A', '314.55.155', '(MJ) Advertising: Violations (statements/illustrations).', 'BELLINGHAM', 'WHATCOM'),
 (416870, '01/03/2018 12:00:00 AM', 'AVN', '7H8003A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORP. AREAS', 'OKANOGAN'),
@@ -4393,7 +4429,7 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (415921, '07/17/2018 12:00:00 AM', 'AVN', '7P8198A', '314.55.097', '(MJ) Failure for a producer to meet marijuana waste disposal requirements. (producer)', 'UNINCORPORATED AREAS', 'CHELAN'),
 (416935, '07/27/2018 12:00:00 AM', 'AVN', '7P8211A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORPORATED AREAS', 'CHELAN'),
 (413534, '07/30/2018 12:00:00 AM', 'Written Warning', '3C8211A', '314.55.155', '(MJ) Advertising: Violations (statements/illustrations).', 'ANACORTES', 'SKAGIT');
-INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
+INSERT INTO `violations` (`license`, `Visit Date`, `Penalty Type`, `Case #`, `WAC Code`, `Violation Type`, `City Name`, `County Name`) VALUES
 (415881, '06/13/2018 12:00:00 AM', 'AVN', '7R8164C', '314.55.110', '(MJ) Conduct violations: Criminal conduct: Permitting or engaging in criminal conduct.', 'UNINCORP. AREAS', 'STEVENS'),
 (413855, '06/30/2018 12:00:00 AM', 'AVN', '7B8181C', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'TACOMA', 'PIERCE'),
 (412782, '07/23/2018 12:00:00 AM', 'AVN', '7L8204B', '314.55.083(5)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORP. AREAS', 'KLICKITAT'),
@@ -4554,6 +4590,36 @@ INSERT INTO `violations` (`License Number`, `Visit Date`, `Penalty Type`, `Case 
 (412445, '09/05/2018 12:00:00 AM', 'Written Warning', '7S8248A', '314.55.083(4)', '(MJ) Failure to utilize and/or maintain traceability. (producer)', 'UNINCORPORATED AREAS', 'SPOKANE'),
 (425183, '09/10/2018 12:00:00 AM', 'AVN', '8B8253A', '314.55.035', '(MJ) True party of interest violation.', 'SHELTON', 'MASON');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `scraper`
+--
+ALTER TABLE `scraper`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `scraper`
+--
+ALTER TABLE `scraper`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

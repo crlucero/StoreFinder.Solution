@@ -21,10 +21,13 @@ Allows users to search Database for Dispensaries by Location and Name. Also allo
 2. From the command line, navigate to StoreFinder.Solution or Click this Link 
    {https://github.com/kwolfenb/Store-Finder.git}
 3. From the command line, enter _dotnet restore_ to install necessary packages
-4. From the command line, enter _dotnet build_
-5. From the command line, enter _dotnet run_
-6. In the Chrome browser, navigate to localhost:5000
-7. When done using the program, enter _Ctrl + C_ in the command line to exit 
+4. Import the Weed.Sql database using PhpMyAdmin
+5. In the Model file "scraper.cs" on line 20 is a filepath referencing the chromedriver.exe file (included). Update this filepath to match the location where you downloaded this repository.
+6. The ChromeDriver included in this repository is for Mac. If you are on a Windows machine download a new copy of the ChromeDriver here: http://chromedriver.chromium.org/downloads. 
+6. From the command line, enter _dotnet build_
+7. From the command line, enter _dotnet run_
+8. In the Chrome browser, navigate to localhost:5000
+9. When done using the program, enter _Ctrl + C_ in the command line to exit 
 
 ## Known Bugs
 * Scraper can crash due to unpredictable xpath variations.
